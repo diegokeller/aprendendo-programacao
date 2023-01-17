@@ -1,0 +1,14 @@
+{
+  "name": "@campspot/funcoes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Keller",
+  "license": "ISC",
+  "dependencies": {
+    "scanf": "^1.1.2"
+  }
+}

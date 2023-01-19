@@ -44,7 +44,10 @@ let marcus = {
 
 let mauricio = {
     nome: 'Maurício',
-    anoDeNascimento: 2000
+    anoDeNascimento: 2000,
+    calcularIdade() {
+        return new Date().getFullYear() - this.anoDeNascimento;
+    }
 };
 
 console.log(marcus);
@@ -91,6 +94,31 @@ let carro = {
     }
 };
 
+let carro2 = {
+    ano: 2005,
+    marca: 'Ford',
+    modelo: 'Fiesta',
+    velocidade: 0,
+    estaLigado: false,
+    acelerar() {
+        if (this.estaLigado == false) {
+            console.log('Precisa ligar o carro antes de acelerar');
+            return;
+        }
+        this.velocidade++;
+    },
+    freiar() {
+        if (this.estaLigado == false) {
+            console.log('Precisa ligar o carro antes de freiar');
+            return;
+        }
+        this.velocidade--;
+    },
+    ligar() {
+        this.estaLigado = true;
+    }
+};
+
 console.log(carro);
 console.log(carro.velocidade);
 carro.acelerar();
@@ -112,3 +140,17 @@ let personagem = {
 // Objetos possuem métodos que alteram seus atributos
 // Quando queremos acessar um atributo do objeto, de dentro dele, usamos "this"
 // "this" -> significa o próprio objeto, ele mesmo
+
+// Objetos do mesmo tipo, sempre terão os mesmos métodos
+// Os nomes dos atributos e os métodos, serão sempre iguais
+// Apenas o valor dos atributos irá mudar
+
+// Como se resolve isso
+// Classe -> é um modelo/desenho/plata baixa/esquema de como
+// os objetos daquele tipo devem funcionar.
+
+// Qual a diferença de classe e objeto?
+// A classe é um esquema do objeto, mas ela não existe de verdade
+// Um objeto é criado a partir de uma classe, e ele existe de verdade
+// Classe é uma planta baixa
+// Objeto é a casa construída usando a planta

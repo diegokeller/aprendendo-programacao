@@ -1,0 +1,27 @@
+API
+Application Program Interface
+Interface de Programação de Aplicação.
+=======
+Cardápio
+    Interface que você usa para falar com a cozinha
+=======
+API 
+    Interface que a nossa aplicação front/web/mobile vai usar
+    para falar com o nosso sistema
+=======
+REST
+    Representation State Transfer
+
+    É um jeito de fazer.
+
+    Bolo
+        Laranja
+        Limão
+        Banana
+
+    API 
+        ...
+        ...
+        WSDL
+        REST
+=======

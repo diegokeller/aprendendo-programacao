@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas V2</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS */
+
+        /* Pela TAG HTML */
+        body {
+            background-color: cornsilk;
+            font-family: 'Dancing Script'
+        }
+        h1 {
+            color:orange;
+        }
+        h2 {
+            border-bottom: 3px dotted darkgoldenrod;
+        }
+        /* Pela class HTML */
+        .concluida {
+          text-decoration: line-through;
+          color: green;
+        }
+        li {
+            height: 30px;
+        }
+        .excluir {
+            background-color: red;
+            border: none;
+            border-radius: 4px;
+            color: white;            
+        }
+        
+    </style>
+
+    <script>
+        // Código JavaScript
+
+        function adicionarTarefa() {
+            console.log('Eu cheguei aqui!!!!');
+            let inputTitulo = document.getElementById('titulo');
+            console.log(inputTitulo.value);
+            inputTitulo.value = '';
+            inputTitulo.focus();
+        }
+
+        function verificarEnter(event) {
+            if (event.keyCode == 13) {
+                adicionarTarefa();
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+
+    <h2>Adicionar nova tarefa</h2>
+    <span>Título da nova tarefa</span>
+    <input type="text" id="titulo" onkeypress="verificarEnter(event)">
+    <input type="button" value="Adicionar" 
+        onclick="adicionarTarefa()">
+    
+    <h2>Lista das minhas tarefas</h2>
+    <ul>
+        <li>
+            <input type="checkbox">
+            Comprar pão
+            <input class="excluir" type="button" value="X">
+        </li>
+        <li>Buscar o cachorro</li>
+        <li class="concluida">Lavar o carro</li>
+    </ul>
+</body>
+</html>

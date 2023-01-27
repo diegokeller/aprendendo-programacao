@@ -44,10 +44,25 @@
     <script>
         // Código JavaScript
 
+        class Tarefa {
+            constructor(titulo) {
+                this.titulo = titulo;
+                this.concluida = false;
+            }
+        }
+
+        var tarefas = [
+            new Tarefa('Lavar o carro'),
+            new Tarefa('Buscar o pet'),
+            new Tarefa('Tomar banho')
+        ];
+
         function adicionarTarefa() {
-            console.log('Eu cheguei aqui!!!!');
             let inputTitulo = document.getElementById('titulo');
-            console.log(inputTitulo.value);
+            
+            tarefas.push(new Tarefa(inputTitulo.value));
+            atualizarListaDeTarefas();
+
             inputTitulo.value = '';
             inputTitulo.focus();
         }
@@ -56,6 +71,51 @@
             if (event.keyCode == 13) {
                 adicionarTarefa();
             }
+        }
+
+        function concluir(indiceTarefa) {
+            console.log('Concluir tarefa ', indiceTarefa);
+            tarefas[indiceTarefa].concluida = !tarefas[indiceTarefa].concluida;
+            atualizarListaDeTarefas();
+        }
+
+        function excluir(indiceTarefa) {
+            console.log('Excluir tarefa ', indiceTarefa);
+            tarefas.splice(indiceTarefa, 1);
+            atualizarListaDeTarefas();
+        }
+
+        function atualizarListaDeTarefas() {
+            console.log('Atualizando a lista das tarefas');
+            let lista = document.getElementById('lista-tarefas');
+            
+            let conteudo = '';
+            for(let i = 0; i < tarefas.length; i++){
+
+                let classConcluida;
+                let checked;
+                if(tarefas[i].concluida == true) {
+                    classConcluida = 'class="concluida"';
+                    checked = 'checked';
+                } else {
+                    classConcluida = '';
+                    checked = '';
+                }
+
+                let item = '';
+                item += '<li ' + classConcluida + '>';
+                item += '<input ' + checked + ' type="checkbox" onclick="concluir(' + i + ')">';
+                item += tarefas[i].titulo;
+                item += '<input type="button" value="X" class="excluir" onclick="excluir(' + i + ')">';
+                item += '</li>';                
+                conteudo += item;
+            }
+
+            lista.innerHTML = conteudo;
+        }
+
+        window.onload = () => {
+            atualizarListaDeTarefas();
         }
     </script>
 
@@ -70,14 +130,15 @@
         onclick="adicionarTarefa()">
     
     <h2>Lista das minhas tarefas</h2>
-    <ul>
+    <ul id="lista-tarefas">
         <li>
-            <input type="checkbox">
+            <input type="checkbox" onclick="concluir('Comprar pão')">
             Comprar pão
-            <input class="excluir" type="button" value="X">
+            <input onclick="excluir('Comprar pão')" class="excluir" type="button" value="X">
         </li>
         <li>Buscar o cachorro</li>
         <li class="concluida">Lavar o carro</li>
+        <li>Fazer os temas</li>
     </ul>
 </body>
 </html>

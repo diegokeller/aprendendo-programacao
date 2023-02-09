@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Jogo da Velha</title>
+    <style>
+        body {
+            background-color: beige;
+        }
+        h1 {
+            color: cadetblue;
+        }
+        h2 {
+            color: lightsalmon;
+        }
+        #tabuleiro {
+            border: 1px solid black;
+            height: 285px;
+            width: 285px;
+
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            padding: 10px;
+        }
+        #tabuleiro div {
+            border: 1px solid silver;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+        .red {
+            color: red;
+        }
+        .blue {
+            color: blue;
+        }
+    </style>
+    <script>
+        let jogadorAtual = 'X';
+
+        function jogar(quadrado) {
+            
+            if (verificarQuadradoOcupado(quadrado)) {
+                alert('Esse quadrado esta ocupado.');
+                return;
+            }
+
+            quadrado.innerHTML = jogadorAtual;
+            colorirQuadrado(quadrado);
+
+            if (verificarVencedor()) {
+                alert('Jogador ' + jogadorAtual + ' venceu!!!');
+                return;
+            }
+
+            alternarJogador();
+            mostrarJogadorAtual();
+        }
+        function verificarVencedor() {
+            // TODO Testar todas as combinacoes possiveis
+            if (testarTrio(1,2,3)) {
+                return true;
+            }
+            return false;
+        }
+        function testarTrio(n1, n2, n3) {
+            let a = document.getElementById('q' + n1).innerHTML;
+            let b = document.getElementById('q' + n2).innerHTML;
+            let c = document.getElementById('q' + n3).innerHTML;
+            if (a.length === 0) {
+                return false;
+            }
+            if (a == b && b == c) {
+                return true;
+            }
+            return false;
+        }
+        function verificarQuadradoOcupado(quadrado) {
+            return quadrado.innerHTML.length > 0;
+        }
+        function colorirQuadrado(quadrado) {
+            if (jogadorAtual === 'X') {
+                quadrado.className = 'red';
+            } else {
+                quadrado.className = 'blue';
+            }
+        }
+        function mostrarJogadorAtual() {
+            document.getElementById('jogador').innerHTML = jogadorAtual;
+        }
+        function alternarJogador() {
+            if (jogadorAtual === 'X') {
+                jogadorAtual = 'O';
+            } else {
+                jogadorAtual = 'X';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Jogo da Velha</h1>
+    <h2>
+        Vez do jogador: <span id="jogador">X</span>
+    </h2>
+    <div id="tabuleiro">
+        <div id="q1" onclick="jogar(this)"></div>
+        <div id="q2" onclick="jogar(this)"></div>
+        <div id="q3" onclick="jogar(this)"></div>
+        <div id="q4" onclick="jogar(this)"></div>
+        <div id="q5" onclick="jogar(this)"></div>
+        <div id="q6" onclick="jogar(this)"></div>
+        <div id="q7" onclick="jogar(this)"></div>
+        <div id="q8" onclick="jogar(this)"></div>
+        <div id="q9" onclick="jogar(this)"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+HTML - Conteudo da pagina / texto / visual
+CSS - Maquiagem / estilos / cores / bonitinho
+JS - Comportamento / acoes / executar alguma coisa
+
+A pagina tem um botao - HTML
+O botao e azul - CSS
+Quando eu clico no botao uma flor aparece = JS
+
+CSS e JS vao dentro do HEAD
+
+CSS - STYLE
+JS - SCRIPT
+
+CSS
+    #id -> referencia ao ID de um elemento
+    .className -> referencia ao nome da classe CSS
+    tag -> referencia a TAG HTML
+
+CSS - Cascading Style Sheets
+    - Folhas de estilo em cascata

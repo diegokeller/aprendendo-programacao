@@ -38,31 +38,61 @@
         .blue {
             color: blue;
         }
+        #recomecar {
+            margin: 10px 0px;
+            background-color: azure;
+            border: 1px solid silver;
+            border-radius: 10px;
+            padding: 8px;
+        }
     </style>
     <script>
         let jogadorAtual = 'X';
-
+        let fimDeJogo = false;
+        function recomecar() {
+            window.location.reload();
+        }
         function jogar(quadrado) {
-            
+            if (fimDeJogo) {
+                mostrarMensagem('FIM DE JOGO!!!');
+                return;
+            }
             if (verificarQuadradoOcupado(quadrado)) {
                 alert('Esse quadrado esta ocupado.');
                 return;
             }
-
             quadrado.innerHTML = jogadorAtual;
             colorirQuadrado(quadrado);
-
             if (verificarVencedor()) {
-                alert('Jogador ' + jogadorAtual + ' venceu!!!');
+                mostrarMensagem('Jogador ' + jogadorAtual + ' venceu!!!');
+                fimDeJogo = true;
                 return;
+            } else {
+                if (verificarTabuleiroCompleto()) {
+                    mostrarMensagem('EMPATE!!!!! VELHAAAAAAA');
+                    fimDeJogo = true;
+                    return;
+                }
             }
-
             alternarJogador();
             mostrarJogadorAtual();
         }
+        function mostrarMensagem(mensagem) {
+            const titulo = document.getElementById('titulo-secundario');
+            titulo.innerHTML = mensagem;
+        }
         function verificarVencedor() {
-            // TODO Testar todas as combinacoes possiveis
-            if (testarTrio(1,2,3)) {
+            if (
+                testarTrio(1,2,3) ||
+                testarTrio(4,5,6) ||
+                testarTrio(7,8,9) ||
+                testarTrio(4,5,6) ||
+                testarTrio(1,4,7) ||
+                testarTrio(2,5,8) ||
+                testarTrio(3,6,9) ||
+                testarTrio(1,5,9) ||
+                testarTrio(3,5,7)
+            ) {
                 return true;
             }
             return false;
@@ -81,6 +111,17 @@
         }
         function verificarQuadradoOcupado(quadrado) {
             return quadrado.innerHTML.length > 0;
+        }
+        function verificarTabuleiroCompleto() {
+            let quantidade = 0;
+            for (let x = 1; x <= 9; x++) {
+                let quadrado = document.getElementById('q' + x);
+                let ocupado = verificarQuadradoOcupado(quadrado);
+                if (ocupado) {
+                    quantidade++;   
+                }
+            }
+            return quantidade === 9;
         }
         function colorirQuadrado(quadrado) {
             if (jogadorAtual === 'X') {
@@ -103,9 +144,10 @@
 </head>
 <body>
     <h1>Jogo da Velha</h1>
-    <h2>
+    <h2 id="titulo-secundario">
         Vez do jogador: <span id="jogador">X</span>
     </h2>
+    <input type="button" value="Jogar novamente!" onclick="recomecar()" id="recomecar">
     <div id="tabuleiro">
         <div id="q1" onclick="jogar(this)"></div>
         <div id="q2" onclick="jogar(this)"></div>

@@ -1,0 +1,30 @@
+HTTP
+
+O protocolo HTTP e baseado em requisicao e resposta.
+Requisicao - Pedido para o servidor
+Resposta - Resultado que o servidor da para o nosso pedido
+
+Cada endereco da Web aponta para um recurso.
+
+Verbo:
+    GET - Pegar / obter
+    POST - Criar
+    PUT - Substituir
+    PATCH - Alterar um pedaco ou parte
+    DELETE - Excluir
+
+URL:  
+    O endereco do recurso que queremos solicitar
+
+Requisicao:
+    Podemos as vezes passar mais informacoes nos cabecalhos
+
+Resposta:
+    Corpo - contem o conteudo efetivamente
+    Tamanho - quantos bytes ela tem
+    Status - 200 OK
+        Exemplos:
+            200 - Deu tudo certo
+            404 - Nao encontrado. Nao achei o que voce pediu.
+            401 - Nao autorizado
+        https://en.wikipedia.org/wiki/List_of_HTTP_status_codes

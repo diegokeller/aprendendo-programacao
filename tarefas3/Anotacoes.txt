@@ -1,0 +1,42 @@
+Programacao
+    Linguagem de Programacao
+        JavaScript JS
+        O primeiro arquivo sempre index.js
+
+Runtime - Ambiente de Execucao
+
+    Navegador / Browser
+        Chrome, Edge, Firefox
+
+    Computador
+        Node.js
+        Programa que executa o nosso programa.
+
+Banco de Dados
+    MySQL
+
+    Precisamos de uma ferramenta para conectar no BD
+
+    npm init -y
+    Server para inicializar um novo projeto.
+
+    npm install mysql2
+    Instalar ferramenta para conectar no banco de dados.
+
+Sincronas
+    Bloqueante, espera terminar
+
+    2 + 2: Pergunta -> Resposta
+
+Assincronas
+    Nao bloqueante, nao espera terminar
+
+    Faca um bolo de milho -> Me liga quando estiver pronto
+
+Arquivos
+    config - configuracao
+    service - parte mais grossa codigo
+    index - inicial - vazio / limpo
+    controller -  
+    models - 
+    

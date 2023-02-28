@@ -40,3 +40,29 @@ Arquivos
     controller -  
     models - 
     
+=====
+
+APIs - Servidores
+
+Sempre tem o nome do servidor, a porta e a rota.
+
+https://restcountries.com:443/v2/name/peru
+
+Nome do servidor: restcountries.com
+Porta: 443, depois dos :
+Rota ou funcao: /v2/name/peru
+
+http://localhost:3000/
+
+Servidor: localhost
+Porta: 3000
+Rota: /
+
+===== 
+
+Verbos http
+    GET - Buscar informacoes
+    POST - Criar
+    PUT - Atualizar tudo
+    PATCH - Atualizar um pedaco / parte / campo
+    DELETE - Excluir coisas

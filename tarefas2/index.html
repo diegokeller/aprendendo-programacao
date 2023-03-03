@@ -42,52 +42,28 @@
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    
     <script>
         // Código JavaScript
-
-        class Tarefa {
-            constructor(titulo) {
-                this.titulo = titulo;
-                this.concluida = false;
-            }
-        }
-
-        var tarefas = [
-            
-        ];
 
         function adicionarTarefa() {
             let inputTitulo = document.getElementById('titulo');
             
-            // Dois sinais de igual == compara o conteúdo
-            // 5 == '5' -> TRUE
-            // Três sinais de igual === compara o tipo e o conteúdo
-            // 5 === '5' -> FALSE
-            // 3 sinais de igual
-            if (inputTitulo.value.trim().length === 0) {
-                alert('Informe o nome da tarefa');
-                return;
-            }
-
-            $.post({
-                url: 'http://localhost:3000/tarefas',
-                data: JSON.stringify({
-                    titulo: inputTitulo.value
+            var settings = {
+                "url": "http://localhost:3000/tarefas",
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "titulo": inputTitulo.value
                 }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function(data) {
-                    atualizarListaDeTarefas();
-                }
+            };
+            $.ajax(settings).done(function (response) {
+                atualizarListaDeTarefas();
+                inputTitulo.value = '';
+                inputTitulo.focus();
             });
-
-            inputTitulo.value = '';
-            inputTitulo.focus();
-        }
-
-        function salvarTarefas() {
-            let tarefasString = JSON.stringify(tarefas);
-            localStorage.setItem('tarefas', tarefasString);
         }
 
         function verificarEnter(event) {
@@ -96,54 +72,63 @@
             }
         }
 
-        function concluir(indiceTarefa) {
-            console.log('Concluir tarefa ', indiceTarefa);
-            tarefas[indiceTarefa].concluida = !tarefas[indiceTarefa].concluida;
-            salvarTarefas();
-            atualizarListaDeTarefas();
+        function concluir(id) {
+            console.log('Concluir tarefa ', id);
+            
+            $.ajax({
+                "url": "http://localhost:3000/tarefas/" + id + "/concluir",
+                "method": "PATCH"
+            }).done(function (response) {
+                atualizarListaDeTarefas();
+            });
         }
 
-        function excluir(indiceTarefa) {
-            console.log('Excluir tarefa ', indiceTarefa);
-            tarefas.splice(indiceTarefa, 1);
-            salvarTarefas();
-            atualizarListaDeTarefas();
+        function excluir(id) {
+            console.log('Excluir tarefa ', id);
+            
+            $.ajax({
+                "url": "http://localhost:3000/tarefas/" + id,
+                "method": "DELETE"
+            }).done(function (response) {
+                atualizarListaDeTarefas();
+            });
         }
 
         function atualizarListaDeTarefas() {
             console.log('Atualizando a lista das tarefas');
+            $.ajax({
+                "url": "http://localhost:3000/tarefas",
+                "method": "GET"
+            }).done(function (response) {
+                atualizarHTML(response);
+            });
+        }
 
-            $.get( "http://localhost:3000/tarefas", function( data ) {
+        function atualizarHTML(tarefas) {
+            let lista = document.getElementById('lista-tarefas');
+            let conteudo = '';
+            for(let i = 0; i < tarefas.length; i++){
 
-                const tarefas = data;
-
-                let lista = document.getElementById('lista-tarefas');
-            
-                let conteudo = '';
-                for(let i = 0; i < tarefas.length; i++){
-
-                    let classConcluida;
-                    let checked;
-                    if(tarefas[i].concluida == true) {
-                        classConcluida = 'class="concluida"';
-                        checked = 'checked';
-                    } else {
-                        classConcluida = '';
-                        checked = '';
-                    }
-
-                    let item = '';
-                    item += '<li ' + classConcluida + '>';
-                    item += '<input ' + checked + ' type="checkbox" onclick="concluir(' + i + ')">';
-                    item += tarefas[i].titulo;
-                    item += '<input type="button" value="X" class="excluir" onclick="excluir(' + i + ')">';
-                    item += '</li>';                
-                    conteudo += item;
+                let classConcluida;
+                let checked;
+                if(tarefas[i].concluida == true) {
+                    classConcluida = 'class="concluida"';
+                    checked = 'checked';
+                } else {
+                    classConcluida = '';
+                    checked = '';
                 }
 
-                lista.innerHTML = conteudo;
-                document.getElementById('contadores').innerHTML = `Voce tem ${tarefas.length} tarefas`;
-            });
+                let item = '';
+                item += '<li ' + classConcluida + '>';
+                item += '<input ' + checked + ' type="checkbox" onclick="concluir(' + tarefas[i].id + ')">';
+                item += tarefas[i].titulo;
+                item += '<input type="button" value="X" class="excluir" onclick="excluir(' + tarefas[i].id + ')">';
+                item += '</li>';                
+                conteudo += item;
+            }
+
+            lista.innerHTML = conteudo;
         }
 
         window.onload = () => {
@@ -162,9 +147,15 @@
         onclick="adicionarTarefa()">
     
     <h2>Lista das minhas tarefas</h2>
-    <h3 id="contadores"></h3>
     <ul id="lista-tarefas">
-        
+        <li>
+            <input type="checkbox" onclick="concluir('Comprar pão')">
+            Comprar pão
+            <input onclick="excluir('Comprar pão')" class="excluir" type="button" value="X">
+        </li>
+        <li>Buscar o cachorro</li>
+        <li class="concluida">Lavar o carro</li>
+        <li>Fazer os temas</li>
     </ul>
 </body>
 </html>

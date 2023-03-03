@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Jogo da Velha</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: azure;
+        }
+        h1 {
+            color:darkslategrey;
+        }
+        h2 {
+            color: cadetblue;
+        }
+        .tabuleiro {
+            width: 220px;
+            border: 1px solid silver;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .tabuleiro div {
+            margin: 10px;
+            width: 50px;
+            height: 50px;
+            border: 1px solid silver;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .tabuleiro div.X {
+            color: red;
+        }
+        .tabuleiro div.O {
+            color: blue;
+        }
+        #recomecar {
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: aqua;
+            color: black;
+            border: 1px solid none;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+
+        var turno = 'X';
+        var tabuleiro = [['', '', ''], ['', '', ''], ['', '', '']];
+        var encerrado = false;
+
+        function alternar() {
+            if (turno == 'X') {
+                turno = 'O';
+            } else {
+                turno = 'X';
+            }
+            $('#turno').html('Turno: ' + turno);
+        }
+
+        function verificarFimDeJogo() {
+            if (verificarIguais(0,0,0,1,0,2)) {
+                encerrarComVitoria();
+                return true;
+            } else if (verificarIguais(1,0,1,1,1,2)) {
+                encerrarComVitoria();
+                return true;
+            } else if (verificarIguais(2,0,2,1,2,2)) {
+                encerrarComVitoria();
+                return true;
+            } else if (verificarIguais(0,0,1,0,2,0)) {
+                encerrarComVitoria();
+                return true;
+            } else if (verificarIguais(0,1,1,1,2,1)) {
+                encerrarComVitoria();
+                return true;
+            } else if (verificarIguais(0,2,1,2,2,2)) {
+                encerrarComVitoria();
+                return true;
+            } else if (verificarIguais(0,0,1,1,2,2)) {
+                encerrarComVitoria();
+                return true;
+            }
+            for (let i = 0; i < tabuleiro.length; i++) {
+                for (let j = 0; j < tabuleiro[i].length; j++) {
+                    if (tabuleiro[i][j].length == 0) {
+                        return false;
+                    }
+                }   
+            }
+            encerrarComEmpate();
+            return true;
+        }
+
+        function verificarIguais(i1, j1, i2, j2, i3, j3) {
+            if (tabuleiro[i1][j1].length == 0 ||
+                tabuleiro[i2][j2].length == 0 ||
+                tabuleiro[i3][j3].length == 0) {
+                return false;
+            }
+            return tabuleiro[i1][j1] == tabuleiro[i2][j2] && 
+            tabuleiro[i2][j2] == tabuleiro[i3][j3];
+        }
+
+        function encerrarComVitoria() {
+            $('#turno').html('Jogador ' + turno + ' ganhou!!!');
+            $('#recomecar').show();
+            encerrado = true;
+        }
+
+        function encerrarComEmpate() {
+            $('#turno').html('Empatou!!!');
+            $('#recomecar').show();
+            encerrado = true;
+        }
+
+        function recomecar() {
+            window.location.reload();
+        }
+
+        function jogar(element) {
+
+            if (encerrado) {
+                alert('Jogo Encerrado');
+                return;
+            }
+
+            if ($('#' + element.id).html().length > 0) {
+                alert('Esse quadro está ocupado');
+                return;
+            }
+
+            $('#' + element.id).html(turno);
+            $('#' + element.id).removeClass('X');
+            $('#' + element.id).removeClass('O');
+            $('#' + element.id).addClass(turno);
+
+            let i = element.id.split('-')[0];
+            let j = element.id.split('-')[1];
+            tabuleiro[i][j] = turno;
+            
+            if (verificarFimDeJogo()) {
+                return;
+            }
+
+            alternar();
+        }
+
+    </script>
+</head>
+<body>
+    <h1>Jogo da Velha</h1>
+    <h2 id="turno">Turno: X</h2>    
+    <input id="recomecar" onclick="recomecar()" type="button" style="display: none;" value="Recomeçar">
+    <div class="tabuleiro">
+        <div id="0-0" onclick="jogar(this)"></div>
+        <div id="0-1" onclick="jogar(this)"></div>
+        <div id="0-2" onclick="jogar(this)"></div>
+        <div id="1-0" onclick="jogar(this)"></div>
+        <div id="1-1" onclick="jogar(this)"></div>
+        <div id="1-2" onclick="jogar(this)"></div>
+        <div id="2-0" onclick="jogar(this)"></div>
+        <div id="2-1" onclick="jogar(this)"></div>
+        <div id="2-2" onclick="jogar(this)"></div>
+    </div>    
+</body>
+</html>

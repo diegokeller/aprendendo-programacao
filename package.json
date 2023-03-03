@@ -1,0 +1,23 @@
+{
+  "name": "@campspot/exercicios",
+  "version": "1.0.0",
+  "description": "https://blog.logrocket.com/build-rest-api-node-express-mysql/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegokeller/aprendendo-programacao.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegokeller/aprendendo-programacao/issues"
+  },
+  "homepage": "https://github.com/diegokeller/aprendendo-programacao#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.0-alpha1"
+  }
+}

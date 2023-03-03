@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        body {
+            background-color: azure;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;            
+        }
+        h1 {
+            color:cadetblue
+        }
+        .concluida {
+            text-decoration: line-through;
+        }
+        ul li {
+            list-style-type: none;
+            line-height: 35px;
+        }
+        ul li input[type=button] {
+            margin-left: 10px;
+            background-color: crimson;
+            color: white;
+            border: none;
+            padding: 6px;
+        }
+    </style>
+    <script>
+        class Tarefa {
+
+            titulo;
+            concluida = false;
+
+            constructor(titulo, concluida) {
+                this.titulo = titulo;
+                this.concluida = concluida;
+            }
+        }
+
+        var tarefas = [
+            
+        ];
+
+        function atualizarTarefas() {
+            let tarefasHtml = '';
+            tarefas.forEach(item => {
+                let concluida = item.concluida ? 'concluida' : '';
+                let checked = item.concluida ? 'checked' : ''
+                tarefasHtml += '<li class="' + concluida + '"><input type="checkbox" '+checked+' onclick="concluir(\''+item.titulo+'\')">' + item.titulo + '<input type="button" value="x" onclick="excluir(\''+item.titulo+'\')"></li>';
+            });
+            document.getElementById('tarefas').innerHTML = tarefasHtml;
+        }
+
+        function carregarTarefas() {
+            tarefas = JSON.parse(localStorage.getItem('tarefas'));
+        }
+
+        function salvarTarefas() {
+            let conteudo = JSON.stringify(tarefas);
+            localStorage.setItem('tarefas', conteudo);
+        }
+
+        function concluir(titulo) {
+            let tarefa = tarefas.find(item => item.titulo == titulo);
+            tarefa.concluida = !tarefa.concluida;
+            salvarTarefas();
+            atualizarTarefas();
+        }
+
+        function excluir(titulo) {
+            let indiceTarefa = tarefas.findIndex(item => item.titulo == titulo);
+            tarefas.splice(indiceTarefa, 1);
+            salvarTarefas();
+            atualizarTarefas();
+        }
+
+        function adicionarTarefa() {
+            let nova = document.getElementById('nova-tarefa').value;
+            tarefas.push(new Tarefa(nova, false));
+            this.salvarTarefas();
+            this.atualizarTarefas();
+            document.getElementById('nova-tarefa').value = '';
+            document.getElementById('nova-tarefa').focus();
+        }
+
+        window.onload = () => {
+            carregarTarefas();
+            atualizarTarefas();
+        }
+    </script>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+    <label for="nova-tarefa">Adicionar nova tarefa</label>
+    <input type="text" id="nova-tarefa" onkeypress="if(event.keyCode == 13) adicionarTarefa()">
+    <input type="button" value="Adicionar" onclick="adicionarTarefa()">
+    <ul id="tarefas">        
+    </ul>
+</body>
+</html>
